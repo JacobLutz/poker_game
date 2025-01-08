@@ -23,12 +23,14 @@ public class Poker {
         p2.showHand();
         cards.dealBoard();
         cards.evaluateHand(p2.getHand(p2.card1, p2.card2), cards.getCommunityCards());
+        cards.countSuit(cards.getCommunityCards());
     }
 }
 
 class Deck extends Poker {
     Stack<Card> cards;
     ArrayList<Card> communityCards;
+    ArrayList<Card> combinedCards;
     public Deck() {
         cards = new Stack<>();
         for(String suit : new String[]{"Hearts", "Diamonds", "Clubs", "Spades"}){
@@ -57,13 +59,39 @@ class Deck extends Poker {
     }
 
     public static void evaluateHand(ArrayList playerCards, ArrayList community) {
+
         ArrayList<Card> combinedCards = new ArrayList<>(playerCards);
         combinedCards.addAll(community);
-        System.out.println("\nCommunity Cards: ");
+
+        System.out.println("\nCombined Cards: ");
         for(int i = 0; i < 7; i++) {
             System.out.println(combinedCards.get(i));
         }
+    }//end evaluateHand
+
+    public void countSuit(ArrayList<Card> hand) {
+        int diamondCount = 0;
+        int heartCount = 0;
+        int spadeCount = 0;
+        int clubCount = 0;
+        for (Card card : hand) {
+            if(card.getSuit() == "Diamond's") {
+                diamondCount++;
+            }
+            if(card.getSuit() == ("Heart's")) {
+                heartCount++;
+            }
+            if(card.getSuit().equalsIgnoreCase("Club's")) {
+                clubCount++;
+            }
+            if(card.getSuit().equalsIgnoreCase("Spade's")) {
+                spadeCount++;
+            }
+        }
+        System.out.println("Diamond Count: " + diamondCount + "\nHeart Count: " + heartCount + "\nClub Count: " + clubCount + "\n Spade Count: " + spadeCount);
     }
+
+
 
     public ArrayList getCommunityCards() {
         return communityCards;
@@ -104,7 +132,7 @@ class Card{
     }
     
     public int getRank() {
-        return rank;
+        return this.rank;
     }
 
     @Override
