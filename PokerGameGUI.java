@@ -10,6 +10,7 @@ public class PokerGameGUI extends JFrame {
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         initializeComponents();
+        setVisible(true);
     }
 
     private void initializeComponents() {

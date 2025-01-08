@@ -21,11 +21,14 @@ public class Poker {
         System.out.println("------------");
         p1.showHand();
         p2.showHand();
+        cards.dealBoard();
+        cards.evaluateHand(p2.getHand(p2.card1, p2.card2), cards.getCommunityCards());
     }
 }
 
 class Deck extends Poker {
-    Stack<Card> cards;    
+    Stack<Card> cards;
+    ArrayList<Card> communityCards;
     public Deck() {
         cards = new Stack<>();
         for(String suit : new String[]{"Hearts", "Diamonds", "Clubs", "Spades"}){
@@ -53,6 +56,19 @@ class Deck extends Poker {
         }
     }
 
+    public static void evaluateHand(ArrayList playerCards, ArrayList community) {
+        ArrayList<Card> combinedCards = new ArrayList<>(playerCards);
+        combinedCards.addAll(community);
+        System.out.println("\nCommunity Cards: ");
+        for(int i = 0; i < 7; i++) {
+            System.out.println(combinedCards.get(i));
+        }
+    }
+
+    public ArrayList getCommunityCards() {
+        return communityCards;
+    }
+
     public Card dealCard() {
         return cards.pop();        
     }
@@ -62,12 +78,14 @@ class Deck extends Poker {
             System.out.println(cards.pop());
         }
     }
+   
     public void dealBoard() {
+        communityCards = new ArrayList<>();
         System.out.println("Board: ");
         for(int i = 0; i <5; i++) {
+            communityCards.add(cards.peek());
             System.out.println(cards.pop());
         }
-        System.out.println("--------------");
     }
 }
 
@@ -137,9 +155,17 @@ class Player {
 
     public void setCard1(Card card1) {
         this.card1 = card1;
+
     }
     public void setCard2(Card card2) {
         this.card2 = card2;
+    }
+
+    public ArrayList getHand(Card card1, Card card2) {
+        ArrayList<Card> playersHand = new ArrayList<>();
+        playersHand.add(card1);
+        playersHand.add(card2);
+        return playersHand;
     }
 
 
